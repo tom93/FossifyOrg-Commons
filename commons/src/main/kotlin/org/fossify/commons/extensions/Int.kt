@@ -97,19 +97,16 @@ fun Int.isThisYear(): Boolean {
     return (thenYear == time.year)
 }
 
-fun Int.addBitIf(add: Boolean, bit: Int) =
-    if (add) {
-        addBit(bit)
-    } else {
-        removeBit(bit)
-    }
+@Deprecated("Confusingly named.", ReplaceWith("this.setBitTo(add, bit)"))
+fun Int.addBitIf(add: Boolean, bit: Int) = setBitTo(add, bit)
 
-// TODO: how to do "bits & ~bit" in kotlin?
-fun Int.removeBit(bit: Int) = addBit(bit) - bit
+fun Int.setBitTo(value: Boolean, bit: Int) = if (value) addBit(bit) else removeBit(bit)
+
+fun Int.removeBit(bit: Int) = this and bit.inv()
 
 fun Int.addBit(bit: Int) = this or bit
 
-fun Int.flipBit(bit: Int) = if (this and bit == 0) addBit(bit) else removeBit(bit)
+fun Int.flipBit(bit: Int) = this xor bit
 
 fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 
