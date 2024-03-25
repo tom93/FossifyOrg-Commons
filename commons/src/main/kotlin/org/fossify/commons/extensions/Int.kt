@@ -14,7 +14,7 @@ import org.fossify.commons.helpers.DARK_GREY
 import java.text.DecimalFormat
 import java.util.Calendar
 import java.util.Locale
-import java.util.Random
+import java.util.concurrent.ThreadLocalRandom
 
 fun Int.getContrastColor(): Int {
     val y = (299 * Color.red(this) + 587 * Color.green(this) + 114 * Color.blue(this)) / 1000
@@ -111,7 +111,7 @@ fun Int.addBit(bit: Int) = this or bit
 
 fun Int.flipBit(bit: Int) = if (this and bit == 0) addBit(bit) else removeBit(bit)
 
-fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
+fun ClosedRange<Int>.random() = ThreadLocalRandom.current().nextInt(endInclusive - start) + start
 
 // taken from https://stackoverflow.com/a/40964456/1967672
 fun Int.darkenColor(factor: Int = 8): Int {
